@@ -21,6 +21,7 @@ Auth::routes(["register" => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/u/{name}', 'UserPageController@show');
+Route::get('/u/{name}/{id}', 'UserPageController@showDetail');
 
 //管理側
 Route::group(['middleware' => ['auth.admin']], function () {
