@@ -17,9 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(["register" => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/u/{name}', 'UserPageController@show');
 
 //管理側
 Route::group(['middleware' => ['auth.admin']], function () {
@@ -30,8 +31,12 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::post('/admin/logout', 'admin\AdminLogoutController@logout');
     //ユーザー一覧
     Route::get('/admin/user_list', 'admin\ManageUserController@showUserList');
+    //ユーザー登録
+    Route::get('/admin/user/create', 'admin\ManageUserController@showUserCreateForm');
+    Route::post('/admin/user/create', 'admin\ManageUserController@create');
     //ユーザー詳細
     Route::get('/admin/user/{id}', 'admin\ManageUserController@showUserDetail');
+    Route::post('/admin/user/{id}', 'admin\ManageUserController@update');
 });
 
 //管理側ログイン
